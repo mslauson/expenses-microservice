@@ -1,20 +1,25 @@
+/*
+ * Copyright (c) 2020. Blossom Budgeting LLC
+ * All rights reserved.
+ */
+
 plugins {
-	id 'org.springframework.boot' version '2.2.4.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'org.springframework.boot' version '2.2.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
 }
 
 group = 'io.blossom.microservices'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
 	maven {
-		url "s3://artifactory-budgeteers"
-		credentials(AwsCredentials) {
-			accessKey project.accessKey
-			secretKey project.secretKey
+		url "https://maven.pkg.github.com/mslauson/budget-common-util"
+		credentials {
+			username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+			password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
 		}
 	}
 }
@@ -40,7 +45,7 @@ dependencies {
 	)
 
 	implementation(
-			'io.blossom.util:budget-common-util:0.0.0.1.12',
+			'io.blossombudgeting.util:budget-common-util:0.0.2.2',
 			'org.springframework.boot:spring-boot-starter-actuator',
 			'org.springframework.boot:spring-boot-starter-security',
 			'org.springframework.boot:spring-boot-starter-web',
@@ -59,8 +64,6 @@ dependencies {
 	}
 	testImplementation(
 			'org.springframework.security:spring-security-test'
-//			'de.flapdoodle.embed:de.flapdoodle.embed.mongo:1.50.5',
-//			'cz.jirutka.spring:embedmongo-spring:RELEASE'
 	)
 	implementation 'junit:junit:4.12'
 }
