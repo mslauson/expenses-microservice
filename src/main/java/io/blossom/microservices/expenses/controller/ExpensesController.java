@@ -6,7 +6,9 @@
 package io.blossom.microservices.expenses.controller;
 
 import io.blossom.microservices.expenses.domain.model.request.AddExpenseRequestModel;
+import io.blossom.microservices.expenses.domain.model.request.ExpensesBatchRequestModel;
 import io.blossom.microservices.expenses.domain.model.response.AlterExpenseResponseModel;
+import io.blossom.microservices.expenses.domain.model.response.ExpenseListResponseModel;
 import io.blossom.microservices.expenses.service.intf.IExpensesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +32,12 @@ public class ExpensesController {
     public AlterExpenseResponseModel addExpenseV1(@Valid @RequestBody AddExpenseRequestModel requestModel) {
         log.info("addExpensesV1 request[{}]", requestModel.toString());
         return expensesService.saveExpense(requestModel);
+    }
+
+    @PostMapping("/batch")
+    public ExpenseListResponseModel batchAddExpenseV1(@Valid @RequestBody ExpensesBatchRequestModel requestModel) {
+        log.info("batchAddExpensesV1 request[{}]", requestModel.toString());
+        return expensesService.batchSaveExpense(requestModel);
     }
 
 }

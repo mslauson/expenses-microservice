@@ -8,13 +8,37 @@ package io.blossom.microservices.expenses.util;
 import io.blossom.microservices.expenses.domain.entity.ExpensesEntity;
 import io.blossom.microservices.expenses.domain.model.Expense;
 import io.blossom.microservices.expenses.domain.model.request.AddExpenseRequestModel;
+import io.blossom.microservices.expenses.domain.model.request.ExpensesBatchRequestModel;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class ExpensesMapper {
 
     public ExpensesEntity requestToEntity(AddExpenseRequestModel requestModel) {
         return buildExpensesEntity(requestModel);
+    }
+
+    public List<ExpensesEntity> requestToEntity(ExpensesBatchRequestModel requestModel) {
+        List<ExpensesEntity> expensesEntities = new ArrayList<>();
+        requestModel.getExpenses().forEach(expense -> {
+            expensesEntities.add(buildExpensesEntity(expense));
+        });
+        return expensesEntities;
+    }
+
+    public Expense entityToResponse(ExpensesEntity expensesEntity) {
+        return buildExpense(expensesEntity);
+    }
+
+    public List<Expense> entityToResponse(List<ExpensesEntity> expensesEntity) {
+        List<Expense> expenses = new ArrayList<>();
+        expensesEntity.forEach(entity -> {
+            expenses.add(buildExpense(entity));
+        });
+        return expenses;
     }
 
     private ExpensesEntity buildExpensesEntity(Expense expense) {
@@ -31,7 +55,7 @@ public class ExpensesMapper {
                 .build();
     }
 
-    public Expense buildExpense(ExpensesEntity expensesEntity) {
+    private Expense buildExpense(ExpensesEntity expensesEntity) {
         return Expense.builder()
                 .id(expensesEntity.getId())
                 .username(expensesEntity.getUsername())

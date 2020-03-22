@@ -8,13 +8,17 @@ package io.blossom.microservices.expenses.service.impl;
 import io.blossom.microservices.expenses.dao.IExpensesRepository;
 import io.blossom.microservices.expenses.domain.entity.ExpensesEntity;
 import io.blossom.microservices.expenses.domain.model.request.AddExpenseRequestModel;
+import io.blossom.microservices.expenses.domain.model.request.ExpensesBatchRequestModel;
 import io.blossom.microservices.expenses.domain.model.response.AlterExpenseResponseModel;
+import io.blossom.microservices.expenses.domain.model.response.ExpenseListResponseModel;
 import io.blossom.microservices.expenses.service.intf.IExpensesService;
 import io.blossom.microservices.expenses.util.ExpensesMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -29,6 +33,15 @@ public class ExpensesServiceImpl implements IExpensesService {
         long expenseSaveTime = System.currentTimeMillis();
         ExpensesEntity expensesEntity = expensesRepository.save(expensesMapper.requestToEntity(addExpenseRequestModel));
         log.info("Expense save time -> {}ms", System.currentTimeMillis() - expenseSaveTime);
-        return new AlterExpenseResponseModel(expensesMapper.buildExpense(expensesEntity));
+        return new AlterExpenseResponseModel(expensesMapper.entityToResponse(expensesEntity));
+    }
+
+    @Override
+    public ExpenseListResponseModel batchSaveExpense(ExpensesBatchRequestModel requestModel) {
+        log.info("inside ExpensesServiceImpl.batchSaveExpense; {}expenses", requestModel.getExpenses().size());
+        long expenseBatchSaveTime = System.currentTimeMillis();
+        List<ExpensesEntity> expensesEntities = expensesRepository.saveAll(expensesMapper.requestToEntity(requestModel));
+        log.info("batchSaveExpense time -> {}ms", System.currentTimeMillis() - expenseBatchSaveTime);
+        return new ExpenseListResponseModel(expensesMapper.entityToResponse(expensesEntities));
     }
 }
