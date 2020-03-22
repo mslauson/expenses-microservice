@@ -6,8 +6,8 @@
 package io.blossom.microservices.expenses.controller;
 
 import io.blossom.microservices.expenses.domain.model.request.AddExpenseRequestModel;
+import io.blossom.microservices.expenses.domain.model.response.AlterExpenseResponseModel;
 import io.blossom.microservices.expenses.service.intf.IExpensesService;
-import io.blossombudgeting.util.budgetcommonutil.model.GenericSuccessResponseModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class ExpensesController {
     private final IExpensesService expensesService;
 
     @PostMapping
-    public GenericSuccessResponseModel addExpenseV1(@Valid @RequestBody AddExpenseRequestModel requestModel) {
+    public AlterExpenseResponseModel addExpenseV1(@Valid @RequestBody AddExpenseRequestModel requestModel) {
         log.info("addExpensesV1 request[{}]", requestModel.toString());
         return expensesService.saveExpense(requestModel);
     }

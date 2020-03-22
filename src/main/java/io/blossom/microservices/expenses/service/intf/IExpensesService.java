@@ -6,8 +6,8 @@
 package io.blossom.microservices.expenses.service.intf;
 
 import io.blossom.microservices.expenses.domain.model.request.AddExpenseRequestModel;
-import io.blossombudgeting.util.budgetcommonutil.model.GenericSuccessResponseModel;
+import io.blossom.microservices.expenses.domain.model.response.AlterExpenseResponseModel;
 
 public interface IExpensesService {
-    GenericSuccessResponseModel saveExpense(AddExpenseRequestModel addExpenseRequestModel);
+    AlterExpenseResponseModel saveExpense(AddExpenseRequestModel addExpenseRequestModel);
 }

@@ -19,6 +19,7 @@ public class ExpensesMapper {
 
     private ExpensesEntity buildExpensesEntity(Expense expense) {
         return ExpensesEntity.builder()
+                .username(expense.getUsername())
                 .name(expense.getName())
                 .amount(expense.getAmount())
                 .month(expense.getMonth())
@@ -26,5 +27,22 @@ public class ExpensesMapper {
                 .notes(expense.getNotes())
                 .linkedAccount(expense.getLinkedAccount())
                 .linkedTransactions(expense.getLinkedTransactions())
+                .lastUpdated(expense.getLastUpdated())
+                .build();
+    }
+
+    public Expense buildExpense(ExpensesEntity expensesEntity) {
+        return Expense.builder()
+                .id(expensesEntity.getId())
+                .username(expensesEntity.getUsername())
+                .name(expensesEntity.getName())
+                .amount(expensesEntity.getAmount())
+                .month(expensesEntity.getMonth())
+                .reoccurring(expensesEntity.isReoccurring())
+                .notes(expensesEntity.getNotes())
+                .linkedAccount(expensesEntity.getLinkedAccount())
+                .linkedTransactions(expensesEntity.getLinkedTransactions())
+                .lastUpdated(expensesEntity.getLastUpdated())
+                .build();
     }
 }

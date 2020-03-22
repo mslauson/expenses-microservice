@@ -31,10 +31,13 @@ public class Expense {
     private String id;
 
     @NotBlank
-    private String name;
+    private String username;
 
     @NotBlank
-    private String amount;
+    private String name;
+
+    @NotNull
+    private Double amount;
 
     @NotNull
     @JsonSerialize(using = LocalDateSerializer.class)

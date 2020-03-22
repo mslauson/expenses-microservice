@@ -26,9 +26,11 @@ public class ExpensesEntity {
     @Id
     private String id;
 
+    private String username;
+
     private String name;
 
-    private String amount;
+    private Double amount;
 
     private LocalDate month;
 
