@@ -14,7 +14,7 @@ public class AlterExpenseResponseModel extends Expense {
                 expense.getName(),
                 expense.getAmount(),
                 expense.getMonth(),
-                expense.isReoccurring(),
+                expense.getReoccurring(),
                 expense.getLinkedAccount(),
                 expense.getLinkedTransactions(),
                 expense.getNotes(),

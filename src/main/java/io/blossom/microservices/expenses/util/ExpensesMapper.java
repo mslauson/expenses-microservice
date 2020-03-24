@@ -48,7 +48,7 @@ public class ExpensesMapper {
                 .name(expense.getName())
                 .amount(expense.getAmount())
                 .month(expense.getMonth())
-                .reoccurring(expense.isReoccurring())
+                .reoccurring(expense.getReoccurring())
                 .notes(expense.getNotes())
                 .linkedAccount(expense.getLinkedAccount())
                 .linkedTransactions(expense.getLinkedTransactions())
