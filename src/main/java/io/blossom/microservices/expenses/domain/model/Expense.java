@@ -5,6 +5,7 @@
 
 package io.blossom.microservices.expenses.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -26,6 +27,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Expense {
 
     private String id;
@@ -45,7 +47,7 @@ public class Expense {
     private LocalDate month;
 
     @NotNull
-    private boolean reoccurring;
+    private Boolean reoccurring;
 
     private LinkedAccount linkedAccount;
 
@@ -57,4 +59,11 @@ public class Expense {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime lastUpdated;
+
+    private Boolean alterSuccessful;
+
+    public Expense(String id, Boolean alterSuccessful) {
+        this.id = id;
+        this.alterSuccessful = alterSuccessful;
+    }
 }

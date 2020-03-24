@@ -18,6 +18,8 @@ public class AlterExpenseResponseModel extends Expense {
                 expense.getLinkedAccount(),
                 expense.getLinkedTransactions(),
                 expense.getNotes(),
-                expense.getLastUpdated());
+                expense.getLastUpdated(),
+                expense.getAlterSuccessful()
+        );
     }
 }

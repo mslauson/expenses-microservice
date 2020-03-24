@@ -11,6 +11,7 @@ import io.blossom.microservices.expenses.domain.model.request.AddExpenseRequestM
 import io.blossom.microservices.expenses.domain.model.request.ExpensesBatchRequestModel;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class ExpensesMapper {
                 .notes(expense.getNotes())
                 .linkedAccount(expense.getLinkedAccount())
                 .linkedTransactions(expense.getLinkedTransactions())
-                .lastUpdated(expense.getLastUpdated())
+                .lastUpdated(LocalDateTime.now())
                 .build();
     }
 
