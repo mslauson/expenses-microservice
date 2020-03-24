@@ -50,12 +50,10 @@ public class ExpensesServiceImpl implements IExpensesService {
     public ExpenseListResponseModel queryExpenses(ExpenseQueryRequestModel requestModel) {
         log.info("inside ExpensesServiceImpl.saveExpense");
         long expenseQueryTime = System.currentTimeMillis();
-//        LocalDate[] months = new LocalDate[requestModel.getMonths().size()];
-//        requestModel.getMonths().toArray(months);
         List<ExpensesEntity> expensesEntities = expensesRepository.findAll(requestModel.getUsername(),
                 requestModel.getMonths(),
                 requestModel.getName());
-        log.info("batchSaveExpense time -> {}ms", System.currentTimeMillis() - expenseQueryTime);
+        log.info("queryExpenses time -> {}ms", System.currentTimeMillis() - expenseQueryTime);
         return new ExpenseListResponseModel(expensesMapper.entityToResponse(expensesEntities));
     }
 }
