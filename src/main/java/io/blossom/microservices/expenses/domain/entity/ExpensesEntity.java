@@ -34,7 +34,7 @@ public class ExpensesEntity {
 
     private LocalDate month;
 
-    private boolean reoccurring;
+    private Boolean reoccurring;
 
     private LinkedAccount linkedAccount;
 
