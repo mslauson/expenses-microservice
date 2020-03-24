@@ -6,6 +6,7 @@
 package io.blossom.microservices.expenses.controller;
 
 import io.blossom.microservices.expenses.domain.model.request.AddExpenseRequestModel;
+import io.blossom.microservices.expenses.domain.model.request.ExpenseQueryRequestModel;
 import io.blossom.microservices.expenses.domain.model.request.ExpensesBatchRequestModel;
 import io.blossom.microservices.expenses.domain.model.response.AlterExpenseResponseModel;
 import io.blossom.microservices.expenses.domain.model.response.ExpenseListResponseModel;
@@ -13,10 +14,7 @@ import io.blossom.microservices.expenses.service.intf.IExpensesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -38,6 +36,12 @@ public class ExpensesController {
     public ExpenseListResponseModel batchAddExpenseV1(@Valid @RequestBody ExpensesBatchRequestModel requestModel) {
         log.info("batchAddExpensesV1 request[{}]", requestModel.toString());
         return expensesService.batchSaveExpense(requestModel);
+    }
+
+    @GetMapping("/{username}")
+    public ExpenseListResponseModel getExpenseV1(@Valid ExpenseQueryRequestModel requestModel) {
+        log.info("getExpenseV1 request[{}]", requestModel.toString());
+        return expensesService.queryExpenses(requestModel);
     }
 
 }
