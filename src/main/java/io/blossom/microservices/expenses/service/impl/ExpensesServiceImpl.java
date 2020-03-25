@@ -9,10 +9,7 @@ import io.blossom.microservices.expenses.dao.IExpensesRepository;
 import io.blossom.microservices.expenses.domain.entity.ExpensesEntity;
 import io.blossom.microservices.expenses.domain.model.Expense;
 import io.blossom.microservices.expenses.domain.model.ExpenseUpdate;
-import io.blossom.microservices.expenses.domain.model.request.AddExpenseRequestModel;
-import io.blossom.microservices.expenses.domain.model.request.ExpenseQueryRequestModel;
-import io.blossom.microservices.expenses.domain.model.request.ExpensesBatchRequestModel;
-import io.blossom.microservices.expenses.domain.model.request.UpdateExpensesRequestModel;
+import io.blossom.microservices.expenses.domain.model.request.*;
 import io.blossom.microservices.expenses.domain.model.response.AlterExpenseResponseModel;
 import io.blossom.microservices.expenses.domain.model.response.ExpenseListResponseModel;
 import io.blossom.microservices.expenses.exception.ExpenseNotFoundException;
@@ -75,6 +72,29 @@ public class ExpensesServiceImpl implements IExpensesService {
             expenses.add(processUpdates(expenseUpdate));
         });
         log.info("updateExpenses time -> {}ms", System.currentTimeMillis() - updateTime);
+        return new ExpenseListResponseModel(expenses);
+    }
+
+    @Override
+    public ExpenseListResponseModel deleteExpenses(DeleteExpensesRequestModel requestModel) {
+        log.info("inside ExpensesServiceImpl.deleteExpenses");
+        List<Expense> expenses = new ArrayList<>();
+        long deleteTime = System.currentTimeMillis();
+        requestModel.getExpenseDeletions().forEach(expenseId -> {
+            Expense expense;
+            Optional<ExpensesEntity> expensesEntityOptional = expensesRepository.findById(expenseId);
+            if (expensesEntityOptional.isEmpty()) {
+                expense = new Expense(expenseId, false);
+            } else {
+                ExpensesEntity entity = expensesEntityOptional.get();
+                entity.setFlaggedForDeletion(true);
+                entity.setDeletionTimeStamp(LocalDateTime.now());
+                expensesRepository.save(entity);
+                expense = new Expense(expenseId, true);
+            }
+            expenses.add(expense);
+        });
+        log.info("deleteExpenses time -> {}ms", System.currentTimeMillis() - deleteTime);
         return new ExpenseListResponseModel(expenses);
     }
 

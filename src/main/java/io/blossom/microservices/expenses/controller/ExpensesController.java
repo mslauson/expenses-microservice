@@ -5,10 +5,7 @@
 
 package io.blossom.microservices.expenses.controller;
 
-import io.blossom.microservices.expenses.domain.model.request.AddExpenseRequestModel;
-import io.blossom.microservices.expenses.domain.model.request.ExpenseQueryRequestModel;
-import io.blossom.microservices.expenses.domain.model.request.ExpensesBatchRequestModel;
-import io.blossom.microservices.expenses.domain.model.request.UpdateExpensesRequestModel;
+import io.blossom.microservices.expenses.domain.model.request.*;
 import io.blossom.microservices.expenses.domain.model.response.AlterExpenseResponseModel;
 import io.blossom.microservices.expenses.domain.model.response.ExpenseListResponseModel;
 import io.blossom.microservices.expenses.service.intf.IExpensesService;
@@ -43,6 +40,12 @@ public class ExpensesController {
     public ExpenseListResponseModel updateExpensesV1(@Valid @RequestBody UpdateExpensesRequestModel requestModel) {
         log.info("updateExpensesV1 request[{}]", requestModel.toString());
         return expensesService.updateExpenses(requestModel);
+    }
+
+    @PutMapping("/delete")
+    public ExpenseListResponseModel deleteExpensesV1(@Valid @RequestBody DeleteExpensesRequestModel requestModel) {
+        log.info("deleteExpensesV1 request[{}]", requestModel.toString());
+        return expensesService.deleteExpenses(requestModel);
     }
 
     @GetMapping("/{username}")
