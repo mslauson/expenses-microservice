@@ -16,6 +16,6 @@ import java.util.List;
 @Repository
 public interface IExpensesRepository extends MongoRepository<ExpensesEntity, String> {
 
-    @Query("{'username': ?0,  $and : [ { 'month' : { $in : ?1 } }, {'name': {$regex: ?2, $options: 'i'}}] }")
+    @Query("{'username': ?0, 'flaggedForDeletion' : false, $and : [ { 'month' : { $in : ?1 } }, {'name': {$regex: ?2, $options: 'i'}}] }")
     List<ExpensesEntity> findAll(String username, LocalDate[] months, String name);
 }
