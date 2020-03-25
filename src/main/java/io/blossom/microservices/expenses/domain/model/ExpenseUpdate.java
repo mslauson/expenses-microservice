@@ -20,6 +20,10 @@ public class ExpenseUpdate {
 
     private String expenseId;
 
+    private String name;
+
+    private Double amount;
+
     @Valid
     private LinkedAccount linkedAccount;
 

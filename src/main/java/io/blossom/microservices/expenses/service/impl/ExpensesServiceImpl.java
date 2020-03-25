@@ -68,14 +68,17 @@ public class ExpensesServiceImpl implements IExpensesService {
 
     @Override
     public ExpenseListResponseModel updateExpenses(UpdateExpensesRequestModel requestModel) {
+        log.info("inside ExpensesServiceImpl.updateExpenses");
         List<Expense> expenses = new ArrayList<>();
+        long updateTime = System.currentTimeMillis();
         requestModel.getExpenseUpdates().forEach(expenseUpdate -> {
             expenses.add(processUpdates(expenseUpdate));
         });
+        log.info("updateExpenses time -> {}ms", System.currentTimeMillis() - updateTime);
         return new ExpenseListResponseModel(expenses);
     }
 
-    private Expense processUpdates(ExpenseUpdate expenseUpdate) {
+    protected Expense processUpdates(ExpenseUpdate expenseUpdate) {
         Expense expense;
         Optional<ExpensesEntity> entityOp = expensesRepository.findById(expenseUpdate.getExpenseId());
         if (entityOp.isEmpty()) {
@@ -85,7 +88,16 @@ public class ExpensesServiceImpl implements IExpensesService {
             entity.setLinkedAccount(expenseUpdate.getLinkedAccount());
             entity.setLinkedTransactions(expenseUpdate.getLinkedTransactions());
             entity.setLastUpdated(LocalDateTime.now());
-            expense = expensesMapper.entityToResponse(entity);
+            if (expenseUpdate != null) {
+                entity.setNotes(expenseUpdate.getNotes());
+            }
+            if (expenseUpdate.getName() != null) {
+                entity.setName(expenseUpdate.getName());
+            }
+            if (expenseUpdate.getAmount() != null) {
+                entity.setAmount(expenseUpdate.getAmount());
+            }
+            expense = expensesMapper.entityToResponse(expensesRepository.save(entity));
             expense.setAlterSuccessful(true);
         }
         return expense;
