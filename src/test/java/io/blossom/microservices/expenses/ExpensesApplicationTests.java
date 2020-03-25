@@ -11,6 +11,7 @@ import io.blossom.microservices.expenses.domain.model.ExpenseUpdate;
 import io.blossom.microservices.expenses.domain.model.LinkedAccount;
 import io.blossom.microservices.expenses.domain.model.LinkedTransactions;
 import io.blossom.microservices.expenses.domain.model.request.AddExpenseRequestModel;
+import io.blossom.microservices.expenses.domain.model.request.DeleteExpensesRequestModel;
 import io.blossom.microservices.expenses.domain.model.request.ExpensesBatchRequestModel;
 import io.blossom.microservices.expenses.domain.model.request.UpdateExpensesRequestModel;
 import io.blossom.microservices.expenses.domain.model.response.ExpenseListResponseModel;
@@ -49,6 +50,7 @@ class ExpensesApplicationTests {
 	private Expense expense;
 	private ExpenseUpdate expenseUpdate;
 	private UpdateExpensesRequestModel updateExpensesRequestModel;
+	private DeleteExpensesRequestModel deleteExpensesRequestModel;
 	private ObjectMapper om = new ObjectMapper();
 
 	public static String getExpenseId1() {
@@ -305,6 +307,19 @@ class ExpensesApplicationTests {
 	}
 
 	@Test
+	void testUpdateExpenseNotSuccessful() throws Exception {
+		expenseUpdate.setExpenseId("1625sa");
+		updateExpensesRequestModel = new UpdateExpensesRequestModel(Collections.singletonList(expenseUpdate));
+		mockMvc.perform(put("/api/v1/expenses")
+				.content(om.writeValueAsString(updateExpensesRequestModel))
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.expenses[0].alterSuccessful").value(false));
+
+	}
+
+	@Test
 	void testUpdateExpenseNoLinkedAccountId() throws Exception {
 		expenseUpdate.setExpenseId("test");
 		expenseUpdate.setLinkedAccount(new LinkedAccount(null, "testing"));
@@ -342,6 +357,43 @@ class ExpensesApplicationTests {
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isBadRequest())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Required param expenseUpdates is missing."));
+
+	}
+
+	@Test
+	void KTestDeleteExpenses() throws Exception {
+		deleteExpensesRequestModel = new DeleteExpensesRequestModel(Arrays.asList(
+				getExpenseId1(), getExpenseId2(), getExpenseId3()
+		));
+		mockMvc.perform(put("/api/v1/expenses/delete")
+				.content(om.writeValueAsString(deleteExpensesRequestModel))
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+
+	}
+
+	@Test
+	void testDeleteExpensesNotSuccessful() throws Exception {
+		deleteExpensesRequestModel = new DeleteExpensesRequestModel(Collections.singletonList("abc"));
+		mockMvc.perform(put("/api/v1/expenses/delete")
+				.content(om.writeValueAsString(deleteExpensesRequestModel))
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.expenses[0].alterSuccessful").value(false));
+
+	}
+
+	@Test
+	void testDeleteExpensesNoExpenseDeletions() throws Exception {
+		deleteExpensesRequestModel = new DeleteExpensesRequestModel(null);
+		mockMvc.perform(put("/api/v1/expenses/delete")
+				.content(om.writeValueAsString(deleteExpensesRequestModel))
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isBadRequest())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Required param expenseDeletions is missing."));
 
 	}
 

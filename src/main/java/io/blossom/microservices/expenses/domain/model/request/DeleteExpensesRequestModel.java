@@ -8,6 +8,7 @@ package io.blossom.microservices.expenses.domain.model.request;
 
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @ToString
@@ -17,5 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeleteExpensesRequestModel {
+    @NotNull
     private List<String> expenseDeletions;
 }
