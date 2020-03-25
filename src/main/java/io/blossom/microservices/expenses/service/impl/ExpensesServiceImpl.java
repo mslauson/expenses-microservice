@@ -56,7 +56,7 @@ public class ExpensesServiceImpl implements IExpensesService {
         long expenseQueryTime = System.currentTimeMillis();
         List<ExpensesEntity> expensesEntities = expensesRepository.findAll(requestModel.getUsername(),
                 requestModel.getMonths(),
-                requestModel.getName());
+                requestModel.getName() == null ? "" : requestModel.getName());
         log.info("queryExpenses time -> {}ms", System.currentTimeMillis() - expenseQueryTime);
         if (expensesEntities.isEmpty())
             throw new ExpenseNotFoundException("No expenses found with the given search criteria");
@@ -108,7 +108,7 @@ public class ExpensesServiceImpl implements IExpensesService {
             entity.setLinkedAccount(expenseUpdate.getLinkedAccount());
             entity.setLinkedTransactions(expenseUpdate.getLinkedTransactions());
             entity.setLastUpdated(LocalDateTime.now());
-            if (expenseUpdate != null) {
+            if (expenseUpdate.getNotes() != null) {
                 entity.setNotes(expenseUpdate.getNotes());
             }
             if (expenseUpdate.getName() != null) {
