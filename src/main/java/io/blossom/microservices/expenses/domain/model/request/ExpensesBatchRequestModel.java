@@ -9,6 +9,7 @@ import io.blossom.microservices.expenses.domain.model.Expense;
 import lombok.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @ToString
@@ -18,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExpensesBatchRequestModel {
+    @NotNull
     @Valid
     private List<Expense> expenses;
 }

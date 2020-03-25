@@ -8,6 +8,7 @@ package io.blossom.microservices.expenses.domain.model;
 import lombok.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @ToString
@@ -18,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ExpenseUpdate {
 
+    @NotBlank
     private String expenseId;
 
     private String name;
