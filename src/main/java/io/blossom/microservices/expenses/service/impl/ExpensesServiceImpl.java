@@ -52,7 +52,7 @@ public class ExpensesServiceImpl implements IExpensesService {
 
     @Override
     public ExpenseListResponseModel queryExpenses(ExpenseQueryRequestModel requestModel) {
-        log.info("inside ExpensesServiceImpl.saveExpense");
+        log.info("inside ExpensesServiceImpl.queryExpense");
         long expenseQueryTime = System.currentTimeMillis();
         List<ExpensesEntity> expensesEntities = expensesRepository.findAll(requestModel.getUsername(),
                 requestModel.getMonths(),
