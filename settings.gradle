@@ -1,1 +1,6 @@
-rootProject.name = 'expenses'
+/*
+ * Copyright (c) 2020. Blossom Budgeting LLC
+ * All Rights Reserved
+ */
+
+rootProject.name = 'expenses-microservice'

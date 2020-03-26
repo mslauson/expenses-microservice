@@ -1,21 +1,75 @@
+/*
+ * Copyright (c) 2020. Blossom Budgeting LLC
+ * All Rights Reserved
+ */
+
 plugins {
-	id 'org.springframework.boot' version '2.2.4.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'org.springframework.boot' version '2.2.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
 }
 
 group = 'io.blossom.microservices'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
+	maven {
+		url "https://maven.pkg.github.com/mslauson/budget-common-util"
+		credentials {
+			username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+			password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+		}
+	}
 }
 
+ext {
+	set('springCloudVersion', "Hoxton.SR1")
+}
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
+	developmentOnly(
+			'org.springframework.boot:spring-boot-devtools'
+	)
+
+	implementation(
+			'io.blossombudgeting.util:budget-common-util:0.0.2.2',
+			'org.springframework.boot:spring-boot-starter-actuator',
+			'org.springframework.boot:spring-boot-starter-security',
+			'org.springframework.boot:spring-boot-starter-web',
+			'org.springdoc:springdoc-openapi-ui:1.1.30',
+			'org.apache.commons:commons-lang3:3.9',
+			'org.springframework.boot:spring-boot-starter-data-mongodb'
+	)
+
+
+	compileOnly 'org.projectlombok:lombok:1.18.10'
+	annotationProcessor 'org.projectlombok:lombok:1.18.10'
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation(
+			'org.springframework.security:spring-security-test'
+	)
+	implementation 'junit:junit:4.12'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }
 
