@@ -7,4 +7,3 @@ applications:
     path: build/libs/expenses-microservice-0.0.1.jar
     host: expenses-microservice
     domain: dev.blossombudgeting.io
-    buildpack: java_buildpack_offline
