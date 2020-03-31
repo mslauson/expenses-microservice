@@ -1,0 +1,10 @@
+---
+applications:
+  - name: expenses-microservice
+    instances: 1
+    memory: 512M
+    disk_quota: 512M
+    path: build/libs/expenses-microservice-0.0.1.jar
+    host: expenses-microservice
+    domain: dev.blossombudgeting.io
+    buildpack: java_buildpack_offline

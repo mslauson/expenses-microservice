@@ -1,0 +1,33 @@
+name: Build and Deploy to GKE DEV
+
+on:
+  push:
+    branches:
+      - dev
+env:
+  CF_USERNAME: ${{ secrets.CF_USERNAME }}
+  CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+  CF_TARGET_ORG: Blossom Budgeting
+  CF_TARGET_SPACE: dev
+jobs:
+  build project:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Configure Java
+        uses: actions/setup-java@v1
+          with:
+            java-version: 11
+      - name: Build Project With Gradle
+        uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: build
+      - name: Deploy App to PCF
+        uses: d3sandoval/cloud-foundry-action@1.1.1
+        secrets:
+          - $CF_USERNAME
+          - $CF_PASSWORD
+        env:
+          - CF_TARGET_ORG: $CF_TARGET_ORG
+            CF_TARGET_SPACE: $CF_TARGET_SPACE
+        args: push
