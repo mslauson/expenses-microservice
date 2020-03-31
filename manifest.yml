@@ -1,6 +1,7 @@
 ---
 applications:
   - name: expenses-microservice
+    buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.16
     instances: 1
     memory: 1024M
     disk_quota: 1024M
@@ -8,4 +9,4 @@ applications:
     host: expenses-microservice
     domain: dev.blossombudgeting.io
     env:
-      - JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ }, memory_calculator: { stack_threads: 25 } }'
+      - JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ }}'
