@@ -1,4 +1,4 @@
-name: Build and Deploy to GKE DEV
+name: Build and Deploy to PCF Dev
 
 on:
   push:
@@ -10,7 +10,8 @@ env:
   CF_TARGET_ORG: Blossom Budgeting
   CF_TARGET_SPACE: dev
 jobs:
-  build project:
+  build:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -18,16 +19,17 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Build Project With Gradle
-        uses: eskatos/gradle-command-action@v1
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
+      - name: CF Deploy
+        uses: citizen-of-planet-earth/cf-cli-action@v1
         with:
-          arguments: build
-      - name: Deploy App to PCF
-        uses: d3sandoval/cloud-foundry-action@1.1.1
-        secrets:
-          - $CF_USERNAME
-          - $CF_PASSWORD
-        env:
-          - CF_TARGET_ORG: $CF_TARGET_ORG
-            CF_TARGET_SPACE: $CF_TARGET_SPACE
-        args: push
+          cf_username: $CF_USERNAME
+          cf_password: $CF_PASSWORD
+          cf_org: $CF_TARGET_ORG
+          # Target Space
+          cf_space: $CF_TARGET_SPACE
+          # Command to run using CF CLI
+          command: push
