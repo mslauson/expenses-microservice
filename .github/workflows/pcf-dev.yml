@@ -21,7 +21,7 @@ jobs:
       - name: CF Deploy
         uses: citizen-of-planet-earth/cf-cli-action@v1
         with:
-          cf_api: $CF_API
+          cf_api: api.run.pivotal.io
           cf_username: ${{ secrets.CF_USERNAME }}
           cf_password: ${{ secrets.CF_PASSWORD }}
           cf_org: Blossom Budgeting
