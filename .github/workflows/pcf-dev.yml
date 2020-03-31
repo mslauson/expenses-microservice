@@ -23,6 +23,8 @@ jobs:
         with:
           path: /cache 
           key: gradle 
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v1.1
       - name: CF Deploy
         uses: citizen-of-planet-earth/cf-cli-action@v1
         with:
