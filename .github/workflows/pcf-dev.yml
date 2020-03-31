@@ -9,6 +9,7 @@ env:
   CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
   CF_TARGET_ORG: Blossom Budgeting
   CF_TARGET_SPACE: dev
+  CF_API: api.run.pivotal.io
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,6 +27,7 @@ jobs:
       - name: CF Deploy
         uses: citizen-of-planet-earth/cf-cli-action@v1
         with:
+          cf_api:
           cf_username: $CF_USERNAME
           cf_password: $CF_PASSWORD
           cf_org: $CF_TARGET_ORG
