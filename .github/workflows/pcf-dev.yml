@@ -18,6 +18,11 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build
+      - name: Cache
+        uses: actions/cache@v1.1.2
+        with:
+          path: /cache 
+          key: gradle 
       - name: CF Deploy
         uses: citizen-of-planet-earth/cf-cli-action@v1
         with:
