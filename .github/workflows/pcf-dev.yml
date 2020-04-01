@@ -25,6 +25,8 @@ jobs:
           key: gradle 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v1.1
+        env:
+          - SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: CF Deploy
         uses: citizen-of-planet-earth/cf-cli-action@v1
         with:
