@@ -83,5 +83,6 @@ sonarqube {
 		property "sonar.organization", "mslauson"
 		property "sonar.host.url", "https://sonarcloud.io"
 		property "sonar.login", "bb9636b9cf37c1d35e6dadc72d4b93c04f6ffe59"
+		property "sonar.password", "Mm112193!"
 	}
 }
