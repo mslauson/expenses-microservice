@@ -7,7 +7,6 @@ plugins {
 	id 'org.springframework.boot' version '2.2.2.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
-	id "org.sonarqube" version "2.8"
 }
 
 group = 'io.blossom.microservices'
@@ -77,12 +76,4 @@ dependencyManagement {
 test {
 	useJUnitPlatform()
 }
-sonarqube {
-	properties {
-		property "sonar.projectKey", "mslauson_expenses-microservice"
-		property "sonar.organization", "mslauson"
-		property "sonar.host.url", "https://sonarcloud.io"
-		property "sonar.login", "bb9636b9cf37c1d35e6dadc72d4b93c04f6ffe59"
-		property "sonar.password", "Mm112193!"
-	}
-}
+
