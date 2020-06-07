@@ -18,7 +18,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-@RequestMapping("/api/v1/expenses")
+@RequestMapping("/api/v1")
 @RestController
 public class ExpensesController {
 
