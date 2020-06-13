@@ -37,6 +37,9 @@ jobs:
           service_account_email: ${{ secrets.GKE_EMAIL }}
           service_account_key: ${{ secrets.GKE_KEY }}
       # Configure docker to use the gcloud command-line tool as a credential helper
+      - name: ECHO SHA
+        run: |
+          echo $GITHUB_SHA
       - name: Authenticate Docker
         run: |
           docker login $GITHUB_PACKAGES_LOGIN -u $GITHUB_USER -p $GITHUB_PWORD
