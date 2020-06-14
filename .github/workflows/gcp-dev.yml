@@ -46,7 +46,7 @@ jobs:
           echo "a"
           cat ~/.docker/config.json
           kubectl create secret generic regcred \
-              --from-file=.dockerconfigjson= ~/.docker/config.json \
+              --from-file=.dockerconfigjson=~/.docker/config.json \
               --type=kubernetes.io/dockerconfigjson
       # Build the Docker image
       - name: Build
