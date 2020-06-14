@@ -6,3 +6,5 @@ spring:
 springdoc:
   swagger-ui:
     path: /expenses/swagger-ui.html
+  api-docs:
+    path: /expenses/v3/api-docs
