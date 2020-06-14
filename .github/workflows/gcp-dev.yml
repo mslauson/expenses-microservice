@@ -45,7 +45,7 @@ jobs:
           docker login $GITHUB_PACKAGES_LOGIN -u $GITHUB_USER -p $GITHUB_PWORD
           echo "a"
           cat ~/.docker/config.json
-          kubectl create secret generic regcred \
+          kubectl create secret regcred \
               --from-file=.dockerconfigjson= ~/.docker/config.json \
               --type=kubernetes.io/dockerconfigjson
       # Build the Docker image
