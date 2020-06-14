@@ -15,4 +15,9 @@ public class HealthCheckController {
     public ResponseEntity<String> getHealthStatus() {
         return ResponseEntity.ok("healthy");
     }
+
+    @GetMapping("/expenses")
+    public ResponseEntity<String> getHealthStatus2() {
+        return ResponseEntity.ok("healthy");
+    }
 }
