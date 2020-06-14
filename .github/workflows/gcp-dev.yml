@@ -43,7 +43,7 @@ jobs:
       - name: Authenticate Docker
         run: |
           docker login $GITHUB_PACKAGES_LOGIN -u $GITHUB_USER -p $GITHUB_PWORD
-          kubectl create secret docker-registry regcred --docker-server=$GITHUB_PACKAGES_LOGIN --docker-username=$GITHUB_USER --docker-password=$GITHUB_PWORD
+          kubectl create secret docker-registry regcred --docker-server="$GITHUB_PACKAGES_LOGIN" --docker-username="$GITHUB_USER" --docker-password="$GITHUB_PWORD"
       # Build the Docker image
       - name: Build
         run: |
