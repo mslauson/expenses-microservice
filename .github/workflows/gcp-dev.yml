@@ -43,7 +43,6 @@ jobs:
       - name: Authenticate Docker
         run: |
           docker login $GITHUB_PACKAGES_LOGIN -u $GITHUB_USER -p $GITHUB_PWORD
-          echo "a"
           cat ~/.docker/config.json > config.json
       # Build the Docker image
       - name: Build
