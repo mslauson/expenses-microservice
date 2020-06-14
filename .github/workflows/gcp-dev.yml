@@ -20,7 +20,7 @@ env:
   GKE_CLUSTER: dev
   IMAGE: expenses-microservice
   REGISTRY_HOSTNAME: docker.pkg.github.com
-  DEPLOYMENT_NAME: customer-microservice
+  DEPLOYMENT_NAME: expenses-microservice
   AWS_KEY_SERVICVE: ${{ secrets.AWS_KEY_SERVICVE }}
   AWS_SECRET_SERVICE: ${{ secrets.AWS_SECRET_SERVICE}}
 jobs:
