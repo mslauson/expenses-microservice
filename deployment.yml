@@ -26,6 +26,7 @@ spec:
     spec:
       containers:
         - name: expenses-microservice
+          image: docker.pkg.github.com/blossombudgeting/expenses-microservice/expenses-microservice:latest
           readinessProbe:
             failureThreshold: 10
             httpGet:
