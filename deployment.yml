@@ -26,7 +26,6 @@ spec:
     spec:
       containers:
         - name: expenses-microservice
-          image: gcr.io/budget-267523/expenses-microservice:17f57f0d50e0891d2a2c7d322044a937d8f5eff6
           readinessProbe:
             failureThreshold: 10
             httpGet:
