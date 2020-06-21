@@ -101,7 +101,7 @@ public class ExpensesServiceImpl implements IExpensesService {
     protected Expense processUpdates(ExpenseUpdate expenseUpdate) {
         Expense expense;
         Optional<ExpensesEntity> entityOp = expensesRepository.findById(expenseUpdate.getExpenseId());
-        if (entityOp.isEmpty()) {
+        if (!entityOp.isPresent()) {
             expense = new Expense(expenseUpdate.getExpenseId(), false);
         } else {
             ExpensesEntity entity = entityOp.get();
