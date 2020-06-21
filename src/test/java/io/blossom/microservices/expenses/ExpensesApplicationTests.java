@@ -105,6 +105,7 @@ class ExpensesApplicationTests {
 				.content(om.writeValueAsString(addExpenseRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
 				.andReturn();
 		String string = result.getResponse().getContentAsString();
 		Expense rm = om.readValue(string, Expense.class);
@@ -163,6 +164,7 @@ class ExpensesApplicationTests {
 				.content(om.writeValueAsString(new ExpensesBatchRequestModel(expenses)))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
 				.andReturn();
 		String string = result.getResponse().getContentAsString();
 		ExpenseListResponseModel rm = om.readValue(string, ExpenseListResponseModel.class);

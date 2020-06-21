@@ -68,9 +68,9 @@ public class ExpensesServiceImpl implements IExpensesService {
         log.info("inside ExpensesServiceImpl.updateExpenses");
         List<Expense> expenses = new ArrayList<>();
         long updateTime = System.currentTimeMillis();
-        requestModel.getExpenseUpdates().forEach(expenseUpdate -> {
-            expenses.add(processUpdates(expenseUpdate));
-        });
+        requestModel.getExpenseUpdates().forEach(expenseUpdate ->
+            expenses.add(processUpdates(expenseUpdate))
+        );
         log.info("updateExpenses time -> {}ms", System.currentTimeMillis() - updateTime);
         return new ExpenseListResponseModel(expenses);
     }

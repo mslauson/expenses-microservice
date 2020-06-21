@@ -24,9 +24,7 @@ public class ExpensesMapper {
 
     public List<ExpensesEntity> requestToEntity(ExpensesBatchRequestModel requestModel) {
         List<ExpensesEntity> expensesEntities = new ArrayList<>();
-        requestModel.getExpenses().forEach(expense -> {
-            expensesEntities.add(buildExpensesEntity(expense));
-        });
+        requestModel.getExpenses().forEach(expense -> expensesEntities.add(buildExpensesEntity(expense)));
         return expensesEntities;
     }
 
@@ -36,9 +34,7 @@ public class ExpensesMapper {
 
     public List<Expense> entityToResponse(List<ExpensesEntity> expensesEntity) {
         List<Expense> expenses = new ArrayList<>();
-        expensesEntity.forEach(entity -> {
-            expenses.add(buildExpense(entity));
-        });
+        expensesEntity.forEach(entity -> expenses.add(buildExpense(entity)));
         return expenses;
     }
 
