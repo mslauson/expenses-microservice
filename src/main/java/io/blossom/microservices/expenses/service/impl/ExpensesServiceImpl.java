@@ -68,9 +68,9 @@ public class ExpensesServiceImpl implements IExpensesService {
         log.info("inside ExpensesServiceImpl.updateExpenses");
         List<Expense> expenses = new ArrayList<>();
         long updateTime = System.currentTimeMillis();
-        requestModel.getExpenseUpdates().forEach(expenseUpdate -> {
-            expenses.add(processUpdates(expenseUpdate));
-        });
+        requestModel.getExpenseUpdates().forEach(expenseUpdate ->
+            expenses.add(processUpdates(expenseUpdate))
+        );
         log.info("updateExpenses time -> {}ms", System.currentTimeMillis() - updateTime);
         return new ExpenseListResponseModel(expenses);
     }
@@ -101,7 +101,7 @@ public class ExpensesServiceImpl implements IExpensesService {
     protected Expense processUpdates(ExpenseUpdate expenseUpdate) {
         Expense expense;
         Optional<ExpensesEntity> entityOp = expensesRepository.findById(expenseUpdate.getExpenseId());
-        if (entityOp.isEmpty()) {
+        if (!entityOp.isPresent()) {
             expense = new Expense(expenseUpdate.getExpenseId(), false);
         } else {
             ExpensesEntity entity = entityOp.get();

@@ -7,6 +7,8 @@ plugins {
 	id 'org.springframework.boot' version '2.2.2.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
+	id 'org.sonarqube' version '2.8'
+	id 'jacoco'
 }
 
 group = 'io.blossom.microservices'
@@ -16,7 +18,7 @@ sourceCompatibility = '11'
 repositories {
 	mavenCentral()
 	maven {
-		url "https://maven.pkg.github.com/mslauson/budget-common-util"
+		url "https://maven.pkg.github.com/blossombudgeting/budget-common-util"
 		credentials {
 			username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
 			password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
@@ -45,7 +47,7 @@ dependencies {
 	)
 
 	implementation(
-			'io.blossombudgeting.util:budget-common-util:0.0.2.2',
+			'io.blossombudgeting.util:budget-common-util:0.0.2.5',
 			'org.springframework.boot:spring-boot-starter-actuator',
 			'org.springframework.boot:spring-boot-starter-security',
 			'org.springframework.boot:spring-boot-starter-web',
@@ -75,5 +77,39 @@ dependencyManagement {
 
 test {
 	useJUnitPlatform()
+}
+
+jacoco {
+	toolVersion = "0.8.5"
+	reportsDir = file("$buildDir/customJacocoReportDir")
+}
+jacocoTestReport {
+	reports {
+		xml.enabled false
+		csv.enabled false
+		html.destination file("${buildDir}/jacocoHtml")
+	}
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.8
+			}
+		}
+
+		rule {
+			enabled = false
+			element = 'CLASS'
+			includes = ['org.gradle.*']
+
+			limit {
+				counter = 'LINE'
+				value = 'TOTALCOUNT'
+				maximum = 0.3
+			}
+		}
+	}
 }
 

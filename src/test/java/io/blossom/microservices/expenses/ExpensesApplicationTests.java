@@ -101,10 +101,11 @@ class ExpensesApplicationTests {
 
 	@Test
 	void ATestAddExpense() throws Exception {
-		MvcResult result = mockMvc.perform(post("/api/v1/expenses")
+		MvcResult result = mockMvc.perform(post("/expenses/api/v1")
 				.content(om.writeValueAsString(addExpenseRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
 				.andReturn();
 		String string = result.getResponse().getContentAsString();
 		Expense rm = om.readValue(string, Expense.class);
@@ -115,7 +116,7 @@ class ExpensesApplicationTests {
 	@Test
 	void testAddExpenseNoUsername() throws Exception {
 		addExpenseRequestModel.setUsername(null);
-		mockMvc.perform(post("/api/v1/expenses")
+		mockMvc.perform(post("/expenses/api/v1")
 				.content(om.writeValueAsString(addExpenseRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -126,7 +127,7 @@ class ExpensesApplicationTests {
 	@Test
 	void testAddExpenseNoName() throws Exception {
 		addExpenseRequestModel.setName(null);
-		mockMvc.perform(post("/api/v1/expenses")
+		mockMvc.perform(post("/expenses/api/v1")
 				.content(om.writeValueAsString(addExpenseRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -137,7 +138,7 @@ class ExpensesApplicationTests {
 	@Test
 	void testAddExpenseNoAmount() throws Exception {
 		addExpenseRequestModel.setAmount(null);
-		mockMvc.perform(post("/api/v1/expenses")
+		mockMvc.perform(post("/expenses/api/v1")
 				.content(om.writeValueAsString(addExpenseRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -149,7 +150,7 @@ class ExpensesApplicationTests {
 	@Test
 	void testAddExpenseNoMonth() throws Exception {
 		addExpenseRequestModel.setMonth(null);
-		mockMvc.perform(post("/api/v1/expenses")
+		mockMvc.perform(post("/expenses/api/v1")
 				.content(om.writeValueAsString(addExpenseRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -159,10 +160,11 @@ class ExpensesApplicationTests {
 
 	@Test
 	void BTestBatchAddExpense() throws Exception {
-		MvcResult result = mockMvc.perform(post("/api/v1/expenses/batch")
+		MvcResult result = mockMvc.perform(post("/expenses/api/v1/batch")
 				.content(om.writeValueAsString(new ExpensesBatchRequestModel(expenses)))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
 				.andReturn();
 		String string = result.getResponse().getContentAsString();
 		ExpenseListResponseModel rm = om.readValue(string, ExpenseListResponseModel.class);
@@ -172,7 +174,7 @@ class ExpensesApplicationTests {
 
 	@Test
 	void testBatchAddExpenseNoArray() throws Exception {
-		mockMvc.perform(post("/api/v1/expenses/batch")
+		mockMvc.perform(post("/expenses/api/v1/batch")
 				.content(om.writeValueAsString(new ExpensesBatchRequestModel(null)))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -182,7 +184,7 @@ class ExpensesApplicationTests {
 
 	@Test
 	void CTestQueryExpenseName1() throws Exception {
-		mockMvc.perform(get("/api/v1/expenses/sbin4life")
+		mockMvc.perform(get("/expenses/api/v1/sbin4life")
 				.param("name", "abcdefghijk")
 				.param("months", "2020-04-01")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -193,7 +195,7 @@ class ExpensesApplicationTests {
 
 	@Test
 	void DTestQueryExpenseName2() throws Exception {
-		mockMvc.perform(get("/api/v1/expenses/sbin4life")
+		mockMvc.perform(get("/expenses/api/v1/sbin4life")
 				.param("name", "kjihgfedcba")
 				.param("months", "2020-03-01")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -204,7 +206,7 @@ class ExpensesApplicationTests {
 
 	@Test
 	void ETestQueryExpenseMonth1() throws Exception {
-		mockMvc.perform(get("/api/v1/expenses/sbin4life")
+		mockMvc.perform(get("/expenses/api/v1/sbin4life")
 				.param("months", "2020-03-01")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -214,7 +216,7 @@ class ExpensesApplicationTests {
 
 	@Test
 	void FTestQueryExpenseMonth2() throws Exception {
-		mockMvc.perform(get("/api/v1/expenses/sbin4life")
+		mockMvc.perform(get("/expenses/api/v1/sbin4life")
 				.param("months", "2020-04-01")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -224,7 +226,7 @@ class ExpensesApplicationTests {
 
 	@Test
 	void GTestQueryExpenseMonth3() throws Exception {
-		mockMvc.perform(get("/api/v1/expenses/sbin4life")
+		mockMvc.perform(get("/expenses/api/v1/sbin4life")
 				.param("months", "2020-03-01")
 				.param("months", "2020-04-01")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -235,7 +237,7 @@ class ExpensesApplicationTests {
 
 	@Test
 	void HtestQueryExpensesNoResults() throws Exception {
-		mockMvc.perform(get("/api/v1/expenses/sbin4lifesadf")
+		mockMvc.perform(get("/expenses/api/v1/sbin4lifesadf")
 				.param("months", "2020-03-01")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -245,7 +247,7 @@ class ExpensesApplicationTests {
 
 	@Test
 	void ItestQueryExpensesNoResults2() throws Exception {
-		mockMvc.perform(get("/api/v1/expenses/sbin4life")
+		mockMvc.perform(get("/expenses/api/v1/sbin4life")
 				.param("name", "abcdefghijk")
 				.param("months", "2020-02-01")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -258,7 +260,7 @@ class ExpensesApplicationTests {
 	void JTestUpdateExpense() throws Exception {
 		expenseUpdate.setExpenseId(getExpenseId1());
 		updateExpensesRequestModel = new UpdateExpensesRequestModel(Collections.singletonList(expenseUpdate));
-		mockMvc.perform(put("/api/v1/expenses")
+		mockMvc.perform(put("/expenses/api/v1")
 				.content(om.writeValueAsString(updateExpensesRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -269,7 +271,7 @@ class ExpensesApplicationTests {
 	@Test
 	void testUpdateExpenseNoId() throws Exception {
 		updateExpensesRequestModel = new UpdateExpensesRequestModel(Collections.singletonList(expenseUpdate));
-		mockMvc.perform(put("/api/v1/expenses")
+		mockMvc.perform(put("/expenses/api/v1")
 				.content(om.writeValueAsString(updateExpensesRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -283,7 +285,7 @@ class ExpensesApplicationTests {
 		expenseUpdate.setExpenseId("test");
 		expenseUpdate.setLinkedTransactions(Collections.singletonList(new LinkedTransactions(null, 1d)));
 		updateExpensesRequestModel = new UpdateExpensesRequestModel(Collections.singletonList(expenseUpdate));
-		mockMvc.perform(put("/api/v1/expenses")
+		mockMvc.perform(put("/expenses/api/v1")
 				.content(om.writeValueAsString(updateExpensesRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -297,7 +299,7 @@ class ExpensesApplicationTests {
 		expenseUpdate.setExpenseId("test");
 		expenseUpdate.setLinkedTransactions(Collections.singletonList(new LinkedTransactions("null", null)));
 		updateExpensesRequestModel = new UpdateExpensesRequestModel(Collections.singletonList(expenseUpdate));
-		mockMvc.perform(put("/api/v1/expenses")
+		mockMvc.perform(put("/expenses/api/v1")
 				.content(om.writeValueAsString(updateExpensesRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -310,7 +312,7 @@ class ExpensesApplicationTests {
 	void testUpdateExpenseNotSuccessful() throws Exception {
 		expenseUpdate.setExpenseId("1625sa");
 		updateExpensesRequestModel = new UpdateExpensesRequestModel(Collections.singletonList(expenseUpdate));
-		mockMvc.perform(put("/api/v1/expenses")
+		mockMvc.perform(put("/expenses/api/v1")
 				.content(om.writeValueAsString(updateExpensesRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -324,7 +326,7 @@ class ExpensesApplicationTests {
 		expenseUpdate.setExpenseId("test");
 		expenseUpdate.setLinkedAccount(new LinkedAccount(null, "testing"));
 		updateExpensesRequestModel = new UpdateExpensesRequestModel(Collections.singletonList(expenseUpdate));
-		mockMvc.perform(put("/api/v1/expenses")
+		mockMvc.perform(put("/expenses/api/v1")
 				.content(om.writeValueAsString(updateExpensesRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -338,7 +340,7 @@ class ExpensesApplicationTests {
 		expenseUpdate.setExpenseId("test");
 		expenseUpdate.setLinkedAccount(new LinkedAccount("null", null));
 		updateExpensesRequestModel = new UpdateExpensesRequestModel(Collections.singletonList(expenseUpdate));
-		mockMvc.perform(put("/api/v1/expenses")
+		mockMvc.perform(put("/expenses/api/v1")
 				.content(om.writeValueAsString(updateExpensesRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -351,7 +353,7 @@ class ExpensesApplicationTests {
 	void testUpdateExpenseNoExpenseUpdates() throws Exception {
 		expenseUpdate.setExpenseId("test");
 		updateExpensesRequestModel = new UpdateExpensesRequestModel(null);
-		mockMvc.perform(put("/api/v1/expenses")
+		mockMvc.perform(put("/expenses/api/v1")
 				.content(om.writeValueAsString(updateExpensesRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -365,7 +367,7 @@ class ExpensesApplicationTests {
 		deleteExpensesRequestModel = new DeleteExpensesRequestModel(Arrays.asList(
 				getExpenseId1(), getExpenseId2(), getExpenseId3()
 		));
-		mockMvc.perform(put("/api/v1/expenses/delete")
+		mockMvc.perform(put("/expenses/api/v1/delete")
 				.content(om.writeValueAsString(deleteExpensesRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -376,7 +378,7 @@ class ExpensesApplicationTests {
 	@Test
 	void testDeleteExpensesNotSuccessful() throws Exception {
 		deleteExpensesRequestModel = new DeleteExpensesRequestModel(Collections.singletonList("abc"));
-		mockMvc.perform(put("/api/v1/expenses/delete")
+		mockMvc.perform(put("/expenses/api/v1/delete")
 				.content(om.writeValueAsString(deleteExpensesRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -388,7 +390,7 @@ class ExpensesApplicationTests {
 	@Test
 	void testDeleteExpensesNoExpenseDeletions() throws Exception {
 		deleteExpensesRequestModel = new DeleteExpensesRequestModel(null);
-		mockMvc.perform(put("/api/v1/expenses/delete")
+		mockMvc.perform(put("/expenses/api/v1/delete")
 				.content(om.writeValueAsString(deleteExpensesRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
