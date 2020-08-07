@@ -40,7 +40,7 @@ public class ExpensesMapper {
 
     private ExpensesEntity buildExpensesEntity(Expense expense) {
         return ExpensesEntity.builder()
-                .username(expense.getUsername())
+                .username(expense.getPhone())
                 .name(expense.getName())
                 .amount(expense.getAmount())
                 .month(expense.getMonth())
@@ -55,7 +55,7 @@ public class ExpensesMapper {
     private Expense buildExpense(ExpensesEntity expensesEntity) {
         return Expense.builder()
                 .id(expensesEntity.getId())
-                .username(expensesEntity.getUsername())
+                .phone(expensesEntity.getUsername())
                 .name(expensesEntity.getName())
                 .amount(expensesEntity.getAmount())
                 .month(expensesEntity.getMonth())

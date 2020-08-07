@@ -48,7 +48,7 @@ public class ExpensesController {
         return expensesService.deleteExpenses(requestModel);
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/{phone}")
     public ExpenseListResponseModel getExpenseV1(@Valid ExpenseQueryRequestModel requestModel) {
         log.info("getExpensesV1 request[{}]", requestModel.toString());
         return expensesService.queryExpenses(requestModel);

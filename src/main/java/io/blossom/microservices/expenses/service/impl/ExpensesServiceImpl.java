@@ -54,7 +54,7 @@ public class ExpensesServiceImpl implements IExpensesService {
     public ExpenseListResponseModel queryExpenses(ExpenseQueryRequestModel requestModel) {
         log.info("inside ExpensesServiceImpl.queryExpense");
         long expenseQueryTime = System.currentTimeMillis();
-        List<ExpensesEntity> expensesEntities = expensesRepository.findAll(requestModel.getUsername(),
+        List<ExpensesEntity> expensesEntities = expensesRepository.findAll(requestModel.getPhone(),
                 requestModel.getMonths(),
                 requestModel.getName() == null ? "" : requestModel.getName());
         log.info("queryExpenses time -> {}ms", System.currentTimeMillis() - expenseQueryTime);

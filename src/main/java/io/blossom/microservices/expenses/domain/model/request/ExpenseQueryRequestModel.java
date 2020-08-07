@@ -21,7 +21,7 @@ import java.time.LocalDate;
 public class ExpenseQueryRequestModel {
 
     @NotBlank
-    private String username;
+    private String phone;
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
