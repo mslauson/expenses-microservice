@@ -27,7 +27,7 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ExpensesServiceImpl implements IExpensesService {
     private final ExpensesMapper expensesMapper;
     private final IExpensesRepository expensesRepository;
