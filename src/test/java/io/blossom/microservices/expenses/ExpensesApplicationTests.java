@@ -114,14 +114,14 @@ class ExpensesApplicationTests {
 
 
 	@Test
-	void testAddExpenseNoUsername() throws Exception {
+	void testAddExpenseNoPhone() throws Exception {
 		addExpenseRequestModel.setPhone(null);
 		mockMvc.perform(post("/expenses/api/v1")
 				.content(om.writeValueAsString(addExpenseRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isBadRequest())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Required param username is missing."));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Required param phone is missing."));
 	}
 
 	@Test
