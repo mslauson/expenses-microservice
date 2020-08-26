@@ -33,7 +33,7 @@ public class Expense {
     private String id;
 
     @NotBlank
-    private String username;
+    private String phone;
 
     @NotBlank
     private String name;

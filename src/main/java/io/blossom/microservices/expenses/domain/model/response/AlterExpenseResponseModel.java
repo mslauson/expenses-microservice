@@ -10,7 +10,7 @@ import io.blossom.microservices.expenses.domain.model.Expense;
 public class AlterExpenseResponseModel extends Expense {
     public AlterExpenseResponseModel(Expense expense) {
         super(expense.getId(),
-                expense.getUsername(),
+                expense.getPhone(),
                 expense.getName(),
                 expense.getAmount(),
                 expense.getMonth(),

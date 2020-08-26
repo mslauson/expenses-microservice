@@ -80,14 +80,14 @@ class ExpensesApplicationTests {
 	@BeforeEach
 	void setUp() {
 		addExpenseRequestModel = new AddExpenseRequestModel();
-		addExpenseRequestModel.setUsername("sbin4life");
+		addExpenseRequestModel.setPhone("sbin4life");
 		addExpenseRequestModel.setName("abcdefghijk");
 		addExpenseRequestModel.setAmount(21.34d);
 		addExpenseRequestModel.setMonth(LocalDate.of(2020, 4, 1));
 		addExpenseRequestModel.setReoccurring(true);
 
 		expense = new Expense();
-		expense.setUsername("sbin4life");
+		expense.setPhone("sbin4life");
 		expense.setName("kjihgfedcba");
 		expense.setAmount(21.34d);
 		expense.setMonth(LocalDate.of(2020, 3, 1));
@@ -114,14 +114,14 @@ class ExpensesApplicationTests {
 
 
 	@Test
-	void testAddExpenseNoUsername() throws Exception {
-		addExpenseRequestModel.setUsername(null);
+	void testAddExpenseNoPhone() throws Exception {
+		addExpenseRequestModel.setPhone(null);
 		mockMvc.perform(post("/expenses/api/v1")
 				.content(om.writeValueAsString(addExpenseRequestModel))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isBadRequest())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Required param username is missing."));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Required param phone is missing."));
 	}
 
 	@Test
